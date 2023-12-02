@@ -49,7 +49,7 @@ main {
 
 .weather-app-city {
     margin: 0px;
-    font-size: 32px;
+    font-size: 38px;
     font-weight: 700;
     line-height: 48px;
 }
@@ -71,12 +71,13 @@ main {
 
 .weather-app-temperature {
     display: flex;
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .weather-app-icon {
     font-size: 54px;
-    margin-top: 22px;
+    background-color: #e9e9e9;
+    border-radius: 500px;
 }
 
 .weather-app-temperature-value {

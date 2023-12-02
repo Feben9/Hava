@@ -1,16 +1,24 @@
 function refreshWeather(response) {
     let temperatureValue = document.querySelector("#temperature-value");
     let temperature = response.data.temperature.current;
-    console.log(temperature);
-    temperatureValue.innerHTML = Math.round(temperature);
     let cityElement = document.querySelector("#weather-app-city");
+    let desc = document.querySelector("#description");
+    let weatherWind = document.querySelector("#wind");
+    let weatherHumidity = document.querySelector("#humidity");
+    let weatherIcon = document.querySelector("#icon");
+
+    temperatureValue.innerHTML = Math.round(temperature);
     cityElement.innerHTML = response.data.city;
+    desc.innerHTML = `${response.data.condition.description}`;
+    weatherWind.innerHTML = `${response.data.wind.speed}m/s`;
+    weatherHumidity.innerHTML = `${response.data.temperature.humidity}%`;
+    weatherIcon.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
 }
 
 function searchCity(city) {
-  let apiKey = `b2a5adcct04b33178913oc335f405433`;
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query={city}&key={apiKey}&units=metric`;
-    axios.get(apiUrl).then(refreshWeather);
+  let apiKey = `o40f86t9b8f9434a4b59c39ad0c1d830`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(refreshWeather);
 }
 
 function getCurrentDate() {
