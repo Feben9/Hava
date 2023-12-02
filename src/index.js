@@ -8,8 +8,12 @@ function refreshWeather(response) {
     let weatherIcon = document.querySelector("#icon");
 
     temperatureValue.innerHTML = Math.round(temperature);
-    cityElement.innerHTML = response.data.city;
-    desc.innerHTML = `${response.data.condition.description}`;
+    cityElement.innerHTML = `${response.data.city}`;
+    let inputText = response.data.condition.description;
+    let capitalizedText = inputText.replace(/\b\w/g, function (char) {
+                return char.toUpperCase();
+            })
+    desc.innerHTML = `${capitalizedText}`;
     weatherWind.innerHTML = `${response.data.wind.speed}m/s`;
     weatherHumidity.innerHTML = `${response.data.temperature.humidity}%`;
     weatherIcon.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`;
