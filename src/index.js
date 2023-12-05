@@ -61,31 +61,49 @@ function getCurrentDate() {
   nowDate.innerHTML = `${currentMonth} ${currentDate}, ${currentYear}`;
 }
 
-function displayForecast() {
-  let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+function formatTime(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  return (days[date.getDay()]);
+}
+
+function displayForecast(response) {
+  console.log(response.data);
+
+  let days = response.data.daily;
   let forecastHtml = "";
 
-  days.forEach(function (day) {
-    forecastHtml = forecastHtml + `
-      <div class="each-day">
-        <p>${day}</p>
-        <div class="forecast-icon">
-          <img 
-            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png"
-            alt=""
-            width="50px"
-            height="50px"
-          />
+  days.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml = forecastHtml + `
+        <div class="each-day">
+          <p>${formatTime(day.time)}</p>
+          <div class="forecast-icon">
+            <img 
+              src="${day.condition.icon_url}"
+              alt=""
+              width="50px"
+              height="50px"
+            />
+          </div>
+          <div class="forecast-temp">
+            <span class="forecast-temp-high">${Math.round(day.temperature.maximum)}° |</span>
+            <span class="forecast-temp-low"> <strong>${Math.round(day.temperature.minimum)}°</strong></span>
+          </div>
         </div>
-        <div class="forecast-temp">
-          <span class="forecast-temp-high">25&degC |</span>
-          <span class="forecast-temp-low"> <strong>17&degC </strong></span>
-        </div>
-      </div>`;
+        `;
+    }
   });
 
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHtml;
+}
+
+function getForecast(city) { 
+  let apiKey = `o40f86t9b8f9434a4b59c39ad0c1d830`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`; 
+  axios.get(apiUrl).then(displayForecast); 
 }
 
 function handleSearch(event) {
@@ -94,7 +112,7 @@ function handleSearch(event) {
 
     searchCity(searchInput.value);
     getCurrentDate();
-    displayForecast();
+    getForecast(searchInput.value);
 }
 
 let searchFormElement = document.querySelector("#search-form");
