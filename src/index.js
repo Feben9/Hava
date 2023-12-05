@@ -117,3 +117,5 @@ function handleSearch(event) {
 
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearch);
+
+searchCity("Addis Ababa");
