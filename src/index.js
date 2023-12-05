@@ -61,12 +61,40 @@ function getCurrentDate() {
   nowDate.innerHTML = `${currentMonth} ${currentDate}, ${currentYear}`;
 }
 
+function displayForecast() {
+  let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  let forecastHtml = "";
+
+  days.forEach(function (day) {
+    forecastHtml = forecastHtml + `
+      <div class="each-day">
+        <p>${day}</p>
+        <div class="forecast-icon">
+          <img 
+            src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/few-clouds-day.png"
+            alt=""
+            width="50px"
+            height="50px"
+          />
+        </div>
+        <div class="forecast-temp">
+          <span class="forecast-temp-high">25&degC |</span>
+          <span class="forecast-temp-low"> <strong>17&degC </strong></span>
+        </div>
+      </div>`;
+  });
+
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML = forecastHtml;
+}
+
 function handleSearch(event) {
     event.preventDefault();
     let searchInput = document.querySelector("#search-form-input");
 
     searchCity(searchInput.value);
     getCurrentDate();
+    displayForecast();
 }
 
 let searchFormElement = document.querySelector("#search-form");
